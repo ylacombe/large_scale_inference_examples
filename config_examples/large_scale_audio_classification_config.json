@@ -1,0 +1,14 @@
+{
+    "dtype": "bfloat16",
+    "dataloader_num_workers": 4,
+    "output_dir": "./peoples_speech_validation",
+    "per_device_batch_size": 96,
+    "dataset_name": "MLCommons/peoples_speech",
+    "dataset_config_name": "default",
+    "dataset_split_name": "validation",
+    "audio_column_name": "audio",
+    "max_length_seconds": 5,
+    "preprocessing_num_workers": 24,
+    "temporary_save_to_disk": "./tmp_peoples_speech_validation",
+    "model_name_or_path": "alefiury/wav2vec2-large-xlsr-53-gender-recognition-librispeech"
+}
