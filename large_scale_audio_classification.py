@@ -103,7 +103,14 @@ class DataArguments:
         default=500,
         metadata={"help": "Temporarily save the audio labels every `save_data_steps`."},
     )
-
+    remove_audio_column: bool = field(
+        default=False,
+        metadata={
+            "help": (
+                "Whether to remove the audio column. Helps saving the final dataset much faster."
+            )
+        },
+    )
 @dataclass
 class ModelArguments:
     """
@@ -418,7 +425,10 @@ def main():
             range(len(dataset))
         )
         logger.info(f"Concatenating: {tmp_labels} with {dataset}")
-        dataset = concatenate_datasets([dataset, tmp_labels], axis=1)
+        if data_args.remove_audio_column:
+            dataset = concatenate_datasets([dataset.remove_columns(data_args.audio_column_name), tmp_labels], axis=1)
+        else:
+            dataset = concatenate_datasets([dataset, tmp_labels], axis=1)
 
     accelerator.free_memory()
     del generate_labels
